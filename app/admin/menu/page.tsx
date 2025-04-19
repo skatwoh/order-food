@@ -22,6 +22,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from "@/hooks/use-toast"
 import { Edit, Plus, Trash } from "lucide-react"
 import AdminHeader from "@/components/admin-header"
+import ImageUploader from "./ImageUploader"
 
 interface MenuItem {
   id: number
@@ -97,6 +98,13 @@ export default function AdminMenuPage() {
     }))
   }
 
+  const handleImageChange = (value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      image: value,
+    }))
+  }
+
   const handleAddItem = async () => {
     if (!formData.name || !formData.category || formData.price <= 0) {
       toast({
@@ -134,7 +142,7 @@ export default function AdminMenuPage() {
         name: "",
         price: 0,
         category: "",
-        image: "/placeholder.svg?height=100&width=100",
+        image: "",
       })
     } catch (error) {
       toast({
@@ -308,6 +316,10 @@ export default function AdminMenuPage() {
                         ))}
                       </SelectContent>
                     </Select>
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="Hình ảnh">Hình ảnh</Label>
+                    <ImageUploader onUpload={(base64) => handleImageChange(base64)} />
                   </div>
                 </div>
                 <DialogFooter>
